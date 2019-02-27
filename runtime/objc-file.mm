@@ -67,6 +67,15 @@ GETSECT(_getObjc2ProtocolList,        protocol_t *,    "__objc_protolist");
 GETSECT(_getObjc2ProtocolRefs,        protocol_t *,    "__objc_protorefs");
 GETSECT(getLibobjcInitializers,       UnsignedInitializer, "__objc_init_func");
 
+// 字定义获取类
+classref_t * lefe_getClassList(const headerType *mhdr, size_t *outCount) {
+    return getDataSection<classref_t>(mhdr, "__objc_nlclslist", nil, outCount);
+}
+
+classref_t * lefe_getClassList(const header_info *hi, size_t *outCount) {
+    return getDataSection<classref_t>(hi->mhdr(), "__objc_nlclslist", nil, outCount);
+}
+
 
 objc_image_info *
 _getObjcImageInfo(const headerType *mhdr, size_t *outBytes)

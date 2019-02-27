@@ -2183,6 +2183,7 @@ load_images(const char *path __unused, const struct mach_header *mh)
     // Discover load methods
     {
         mutex_locker_t lock2(runtimeLock);
+        // 准备调用 load 方法
         prepare_load_methods((const headerType *)mh);
     }
 
@@ -2863,6 +2864,7 @@ bool hasLoadMethods(const headerType *mhdr)
     return false;
 }
 
+// 这个方法主要用来准备需要调用load方法的类
 void prepare_load_methods(const headerType *mhdr)
 {
     size_t count, i;
@@ -4889,7 +4891,7 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
 
     if (initialize  &&  !cls->isInitialized()) {
         runtimeLock.unlock();
-        _class_initialize (_class_getNonMetaClass(cls, inst));
+         _class_initialize (_class_getNonMetaClass(cls, inst));
         runtimeLock.lock();
         // If sel == initialize, _class_initialize will send +initialize and 
         // then the messenger will send +initialize again after this 

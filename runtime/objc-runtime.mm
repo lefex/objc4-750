@@ -264,6 +264,7 @@ void removeHeader(header_info *hi)
 **********************************************************************/
 void environ_init(void) 
 {
+    // 如果设置了 ugid 将不去初始化环境变量
     if (issetugid()) {
         // All environment variables are silently ignored when setuid or setgid
         // This includes OBJC_HELP and OBJC_PRINT_OPTIONS themselves.
@@ -273,6 +274,12 @@ void environ_init(void)
     bool PrintHelp = false;
     bool PrintOptions = false;
     bool maybeMallocDebugging = false;
+    
+    // @wsy 修改了调试信息
+//    PrintHelp = true;
+//    PrintOptions = true;
+//    maybeMallocDebugging = true;
+    ///
 
     // Scan environ[] directly instead of calling getenv() a lot.
     // This optimizes the case where none are set.

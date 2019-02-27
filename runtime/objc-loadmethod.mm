@@ -196,7 +196,9 @@ static void call_class_loads(void)
     for (i = 0; i < used; i++) {
         Class cls = classes[i].cls;
         load_method_t load_method = (load_method_t)classes[i].method;
-        if (!cls) continue; 
+        if (!cls) continue;
+        
+        printf("LOAD: %s\n", cls->nameForLogging());
 
         if (PrintLoading) {
             _objc_inform("LOAD: +[%s load]\n", cls->nameForLogging());
